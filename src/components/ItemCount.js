@@ -1,27 +1,40 @@
-import React, {useState} from 'react'
+import React from 'react'
+import { Button } from '@material-ui/core';
+import { Add, Remove } from '@material-ui/icons';
+import { useEffect, useState } from 'react';
+import { ProductAmountContainer, ProductAmount } from './styledComponents';
 
-const ItemCount = ({stock, initial, onAdd}) => {
-      initial = 1;
-      const [count, setCount] = useState(initial);
-      const handleAddItem = () => count < stock && setCount(count + 1);
-      const handleRemoveItem = () => count > 0 && setCount(count - 1);
+const ItemCount = ({ stock = 0, initial = 1,  onAdd }) => {
+    const [count, setCount] = useState(0);
 
-      return (
-        <div className="card-body p-4">
-            <div>
-              <button onClick={handleRemoveItem} disabled={count <= 0} className="btn" style={{backgroundColor: '#FF922E'}}>-
-                </button>
-              <span style={{backgroundColor: '#ecf0f1', borderRadius: '25px'}}className="mx-5 p-2">{count}</span>
-              <button onClick={handleAddItem} disabled={count >= stock} className="btn" style={{backgroundColor: '#FF922E'}}>+
-                </button>
-            </div>
-            <div>
-                <p style={{color: '#000'}} className="h4 my-1"> Stock disponible: {stock - count}</p>
-                <button className="btn btn-success" style={{backgroundColor: '#39841E'}} onClick={() => onAdd(count)} disabled={count > stock || count <= 0}>Agregar al carrito</button>
-            </div>
-          </div>
-      );
-  };
+    useEffect(() => {
+        setCount(initial);
+    },[]);
 
+    const increment = () => {
+        if (count < stock) {
+            setCount(count + 1);
+        }
+    }
+    
+    const decrement = () => {
+        if (count > initial+1) {
+            setCount(count - 1);
+        }
+    }
+    return (
+        <ProductAmountContainer>
+            <Button variant="text" onClick={decrement}><Remove /></Button>
+                <ProductAmount>{count}</ProductAmount>
+            <Button variant="text" onClick={increment}><Add /></Button>
+            {
+                stock && count
+                ? <Button variant="contained" style={{ backgroundColor: "#e91e63", color: "#fff"}} onClick={() => onAdd(count)}>Add to Cart</Button>
+                : <Button variant="contained" disabled>Add to Cart</Button>
+            }
+            
+        </ProductAmountContainer>
+    );
+}
 
-export default ItemCount
+export default ItemCount;

@@ -1,13 +1,16 @@
 import React from 'react'
+import { ProductsContainer } from './styledComponents';
 import Item from './Item.js'
 
 function ItemList({items}) {
     return(
-        <div className="text-center d-flex justify-content-center">
+        <ProductsContainer>
             {
-                items.map((item, index) => (<Item key={'itemlist' + index} {...item} />))
+            items.length > 0
+            ? items.map(item => <Item key={item.id} id={item.id} title={item.title} price={item.price} pictureUrl={item.pictureUrl} stock={item.stock} />)
+            : <p>Cargando...</p>
             }
-        </div>
+        </ProductsContainer>
     )
 }
 

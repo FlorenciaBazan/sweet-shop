@@ -1,40 +1,33 @@
 import React, { useEffect, useState } from 'react'
-import ItemCount from './ItemCount';
 import ItemList from './ItemList';
+import customFetch from "../utils/customFetch";
+import { useParams } from 'react-router';
 import ProductsData from './data';
 
-function ItemListContainer(){
-    const [items, setProducts] = useState(null)
+const ItemListContainer = () => {
+    const [datos, setDatos] = useState([]);
+    const { idCategory } = useParams();
 
     useEffect(() => {
-      setProductsPromise()
-    }, [])
+        customFetch(1000, ProductsData.filter(item => {
+            if (idCategory === undefined) return item;
+            return item.categoryId === parseInt(idCategory)
+        }))
+            .then(result => setDatos(result))
+            .catch(err => console.log(err))
+    }, [datos]);
 
-  const getProducts = () => {
-      return new Promise((resolve, reject) => {
-        setTimeout(() => ProductsData
-          ? resolve(ProductsData)
-          : reject(new Error('getProducts Error'))   
-        , 2000)        
-      })
-  }
-
-  const setProductsPromise = () => {
-        getProducts()
-          .then(
-            response => {
-              setProducts(response)
-            },
-            error => console.log(`Reject`, error)
-        )
-        .catch(error => console.log(`Error`, error))
-  }
+    useEffect(() => {
+        return (() => {
+            setDatos([]);
+        })
+    }, []);
 
     return (
-        <div className='text-center'>
-            {items ? <ItemList items={items}/> : <span className='h3'>Cargando...</span>}
-        </div>
-    )
+        <>  
+            <ItemList items={datos} />
+        </>
+    );
 }
 
 export default ItemListContainer;
