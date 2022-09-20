@@ -1,15 +1,9 @@
 import React from 'react';
 import './App.css';
-import NavBar from './components/NavBar.js';
-import ItemListContainer from './components/ItemListContainter.js';
+import Home from "./pages/Home"
 
 function App() {
-  return (
-    <div>
-      <NavBar />
-      <ItemListContainer greeting={"Hola mundo"}/>  
-    </div>
-  );
+  return <Home />;
 }
 
 export default App;

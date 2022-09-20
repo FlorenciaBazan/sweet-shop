@@ -1,5 +1,6 @@
 // Información breve de un producto
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Item({id, title, price, pictureUrl, description}) {
     return(
@@ -10,7 +11,7 @@ function Item({id, title, price, pictureUrl, description}) {
                 <div className="card-body">
                     <p className="card-text">{description}</p>
                     <p className="card-text">${price}</p>
-                    <button className="btn btn-primary">Ver detalles</button>
+                    <Link to={`/item/${id}`}>Details</Link>
                 </div>
             </div>
         </div>

@@ -32,7 +32,6 @@ function ItemListContainer(){
 
     return (
         <div className='text-center'>
-            <ItemCount stock="10" initial="1" onAdd={contador => console.log(`Agregaste ${contador} productos al carrito`)}/>
             {items ? <ItemList items={items}/> : <span className='h3'>Cargando...</span>}
         </div>
     )
