@@ -20,9 +20,6 @@ function NavBar() {
                 <li className="nav-item">
                   <Link to='/category/2' className="nav-link">WINTER 22</Link>
                 </li>
-                <li className="nav-item">
-                  <Link to='/category/locales' className="nav-link">LOCALES</Link>
-                </li>
               </ul>
               <form className="d-flex" role="search">
                 <Link to='/cart'><CartWidget /></Link>

@@ -6,6 +6,7 @@ import { CartContext } from './CartContext';
 
 function CartWidget() {
   const quantity = useContext(CartContext);
+  
   return(
       <Badge badgeContent={quantity.calcItems()} color="secondary">
         <ShoppingCartOutlined />
