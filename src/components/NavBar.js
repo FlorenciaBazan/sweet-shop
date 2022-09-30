@@ -15,7 +15,7 @@ function NavBar() {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <Link to='/category/1' className="nav-link">BIG SALE</Link>
+                  <Link to='/category/1' className="nav-link">WOMEN</Link>
                 </li>
                 <li className="nav-item">
                   <Link to='/category/2' className="nav-link">WINTER 22</Link>
