@@ -8,12 +8,12 @@ import { CartContext } from './CartContext';
 
 const ItemDetail = ({ item }) => {
     const [itemCount, setItemCount] = useState(0);
-    const test = useContext(CartContext);
+    const context = useContext(CartContext);
 
     const onAdd = (qty) => {
         alert("You have selected " + qty + " items.");
         setItemCount(qty);
-        test.addToCart(item, qty);
+        context.addToCart(item, qty);
     }
 
     return (

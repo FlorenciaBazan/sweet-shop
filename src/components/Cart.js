@@ -72,9 +72,9 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
-    const test = useContext(CartContext);
+    const context = useContext(CartContext);
     const createOrder = async () => {
-      let itemsForDB = test.cartList.map(item => ({
+      let itemsForDB = context.cartList.map(item => ({
         id: item.idItem, 
         price: item.priceItem,
         title:  item.titleItem,
@@ -88,12 +88,12 @@ const Cart = () => {
         },
         date: serverTimestamp(),
         items: itemsForDB,
-        total: test.calcTotal()
+        total: context.calcTotal()
       }
       const newOrderRef = doc(collection(db, "orders"))
       await setDoc(newOrderRef, order);
       alert('Your order has been created with ID '+ newOrderRef.id)
-      test.removeList()
+      context.removeList()
       itemsForDB.map(async(item) => {
         const itemRef = doc(db, "products", item.id);
       await updateDoc(itemRef, {
@@ -109,8 +109,8 @@ const Cart = () => {
             <Top>
                 <Link to='/'><TopButton>CONTINUE SHOPPING</TopButton></Link>
                 {
-                    (test.cartList.length > 0)
-                    ? <TopButton type="filled" onClick={test.removeList}>DELETE ALL PRODUCTS</TopButton>
+                    (context.cartList.length > 0)
+                    ? <TopButton type="filled" onClick={context.removeList}>DELETE ALL PRODUCTS</TopButton>
                     : <TopText>Your cart is empty</TopText>
                 }
             </Top>
@@ -118,8 +118,8 @@ const Cart = () => {
                 <Bottom>
                     <Info>
                         {
-                            test.cartList.length > 0 ? 
-                            test.cartList.map(item => 
+                            context.cartList.length > 0 ? 
+                            context.cartList.map(item => 
                             <Product key={item.idItem}>
                             <ProductDetail>
                                 <ImageCart src={item.imgItem} />
@@ -127,7 +127,7 @@ const Cart = () => {
                                 <span>
                                     <b>Product:</b> {item.nameItem}
                                 </span>
-                                <TopButton type="filled" onClick={() => test.deleteItem(item.idItem)}>DELETE</TopButton>
+                                <TopButton type="filled" onClick={() => context.deleteItem(item.idItem)}>DELETE</TopButton>
                                 </Details>
                             </ProductDetail>
                             <PriceDetail>
@@ -135,7 +135,7 @@ const Cart = () => {
                                 <ProductAmount>{item.qtyItem} item(s)</ProductAmount>
                                 </ProductAmountContainer>
                                 <ProductPrice>$ {item.priceItem} each</ProductPrice>
-                                <ProductPrice>$ {test.calcTotalPerItem(item.idItem)} Total</ProductPrice>
+                                <ProductPrice>$ {context.calcTotalPerItem(item.idItem)} Total</ProductPrice>
                             </PriceDetail>
                             </Product>
                             )
@@ -143,16 +143,16 @@ const Cart = () => {
                         }
                 </Info>
                 {
-                    test.cartList.length > 0 &&
+                    context.cartList.length > 0 &&
                         <Summary>
                             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
                             <SummaryItem>
                                 <SummaryItemText>Subtotal</SummaryItemText>
-                                <SummaryItemPrice>$ {test.calcSubTotal()}</SummaryItemPrice>
+                                <SummaryItemPrice>$ {context.calcSubTotal()}</SummaryItemPrice>
                             </SummaryItem>
                             <SummaryItem type="total">
                                 <SummaryItemText>Total</SummaryItemText>
-                                <SummaryItemPrice>$ {test.calcTotal()}</SummaryItemPrice>
+                                <SummaryItemPrice>$ {context.calcTotal()}</SummaryItemPrice>
                             </SummaryItem>
                             <Button onClick={createOrder}>CHECKOUT NOW</Button>
                         </Summary>
